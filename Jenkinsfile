@@ -30,10 +30,10 @@ pipeline {
         stage('4. Infrastructure Provisioning (Terraform)') {
             steps {
                 dir('terraform') {
-                    echo 'Initializing and applying Infrastructure as Code...'
-                    bat 'terraform init'
-                    bat 'terraform plan -out=tfplan'
-                    bat 'terraform apply -auto-approve tfplan'
+                    echo 'Initializing and applying Infrastructure as Code inside WSL...'
+                    bat 'wsl terraform init'
+                    bat 'wsl terraform plan -out=tfplan'
+                    bat 'wsl terraform apply tfplan'
                 }
             }
         }

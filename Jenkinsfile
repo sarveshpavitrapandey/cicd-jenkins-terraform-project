@@ -18,16 +18,16 @@ pipeline {
         stage('2. Lint & Unit Test') {
             steps {
                 echo 'Executing code analysis and unit testing...'
-                sh 'npm install'
-                sh 'npm test --if-present'
+                bat 'npm install'
+                bat 'npm test --if-present'
             }
         }
 
         stage('3. Build Artifact / Docker Image') {
             steps {
                 echo 'Building Docker container image...'
-                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ."
-                sh "docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} ${DOCKER_IMAGE}:latest"
+                bat "docker build -t %DOCKER_IMAGE%:%IMAGE_TAG% ."
+                bat "docker tag %DOCKER_IMAGE%:%IMAGE_TAG% %DOCKER_IMAGE%:latest"
             }
         }
 
@@ -35,9 +35,9 @@ pipeline {
             steps {
                 dir('terraform') {
                     echo 'Initializing and applying Infrastructure as Code...'
-                    sh 'terraform init'
-                    sh 'terraform plan -out=tfplan'
-                    sh 'terraform apply tfplan'
+                    bat 'terraform init'
+                    bat 'terraform plan -out=tfplan'
+                    bat 'terraform apply tfplan'
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
         stage('5. Deploy Application') {
             steps {
                 echo 'Deploying application artifact/container...'
-                sh "echo 'Deploying image ${DOCKER_IMAGE}:${IMAGE_TAG} successfully!'"
+                bat "echo Deploying image %DOCKER_IMAGE%:%IMAGE_TAG% successfully!"
             }
         }
     }

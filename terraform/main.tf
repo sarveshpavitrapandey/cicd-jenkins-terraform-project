@@ -14,7 +14,7 @@ provider "aws" {
 
 # Create Security Group for App Server
 resource "aws_security_group" "jenkins_app_sg" {
-  name        = "jenkins-app-sg"
+  name_prefix = jenkins-app-sg"
   description = "Allow HTTP and SSH traffic"
 
   ingress {
